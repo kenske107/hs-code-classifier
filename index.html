@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Textile HS Code</title>
   <style>
     :root {
       --primary-brown: #a67c52;
@@ -184,18 +184,6 @@
       backdrop-filter: blur(2px);
     }
 
-    .modal {
-      background: white;
-      padding: 40px 20px;
-      text-align: center;
-      width: 85%;
-      max-width: 320px;
-      border-radius: 10px;
-      border-top: 8px solid var(--primary-brown);
-      box-sizing: border-box;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-    }
-
     #modalOverlay.active {
       display: flex;
       animation: fadeIn 0.2s ease-out;
@@ -211,6 +199,18 @@
         opacity: 1;
         transform: scale(1);
       }
+    }
+
+    .modal {
+      background: white;
+      padding: 40px 20px;
+      text-align: center;
+      width: 85%;
+      max-width: 340px;
+      border-radius: 10px;
+      border-top: 8px solid var(--primary-brown);
+      box-sizing: border-box;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
     }
 
     .modal h3 {
@@ -235,6 +235,33 @@
       color: var(--dark-grey);
       margin: -12px 0 24px;
       display: none;
+    }
+
+    .cotton-options {
+      display: none;
+      gap: 8px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      margin-top: 22px;
+    }
+
+    .cotton-options.active {
+      display: grid;
+    }
+
+    .cotton-option-btn {
+      background: var(--light-grey);
+      color: var(--dark-grey);
+      border: 1px solid var(--border);
+      padding: 14px 6px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .cotton-option-btn:active {
+      background: #e6e6e6;
+      transform: scale(0.98);
     }
 
     .close-btn {
@@ -263,39 +290,24 @@
         <option value="WOVEN">WOVEN</option>
         <option value="WARP KNIT">WARP KNIT</option>
         <option value="WEFT KNIT">WEFT KNIT</option>
-        <option value="면직물_PLAIN">면직물_PLAIN</option>
-        <option value="면직물_TWILL">면직물_TWILL</option>
-        <option value="면직물_ETC">면직물_ETC</option>
-        <option value="면직물_DENIM">면직물_DENIM</option>
       </select>
     </div>
 
     <label class="section-label">YARN CONTENTS</label>
-    <div class="row"><label>POLY, CDP (무가연사)</label><input type="number" id="e" placeholder="입력" min="0" max="100"
-        step="0.01"></div>
-    <div class="row"><label>POLY, CDP (가연사)</label><input type="number" id="f" placeholder="입력" min="0" max="100"
-        step="0.01"></div>
-    <div class="row"><label>NYLON (모든 나일론)</label><input type="number" id="g" placeholder="입력" min="0" max="100"
-        step="0.01"></div>
-    <div class="row"><label>SPANDEX</label><input type="number" id="h" placeholder="입력" min="0" max="100" step="0.01">
-    </div>
-    <div class="row"><label>ETC (TPE, TPU, 기타)</label><input type="number" id="i" placeholder="입력" min="0" max="100"
-        step="0.01"></div>
-    <div class="row"><label>COTTON (면)</label><input type="number" id="j" placeholder="입력" min="0" max="100"
-        step="0.01"></div>
-    <div class="row"><label>STAPLE (단섬유, 방적사)</label><input type="number" id="k" placeholder="입력" min="0" max="100"
-        step="0.01"></div>
+    <div class="row"><label>POLY, CDP (무가연사)</label><input type="number" id="e" placeholder="입력" min="0" max="100" step="0.01"></div>
+    <div class="row"><label>POLY, CDP (가연사)</label><input type="number" id="f" placeholder="입력" min="0" max="100" step="0.01"></div>
+    <div class="row"><label>NYLON (모든 나일론)</label><input type="number" id="g" placeholder="입력" min="0" max="100" step="0.01"></div>
+    <div class="row"><label>SPANDEX</label><input type="number" id="h" placeholder="입력" min="0" max="100" step="0.01"></div>
+    <div class="row"><label>ETC (TPE, TPU, 기타)</label><input type="number" id="i" placeholder="입력" min="0" max="100" step="0.01"></div>
+    <div class="row"><label>COTTON (면)</label><input type="number" id="j" placeholder="입력" min="0" max="100" step="0.01"></div>
+    <div class="row"><label>STAPLE (단섬유, 방적사)</label><input type="number" id="k" placeholder="입력" min="0" max="100" step="0.01"></div>
 
     <label class="section-label">PROCESS OPTION</label>
     <div class="row">
       <label>코팅 여부</label>
       <div class="radio-group">
-        <label><input type="radio" name="coating" value="유" id="l_yes">
-          <div>YES</div>
-        </label>
-        <label><input type="radio" name="coating" value="무" id="l_no" checked>
-          <div>NO</div>
-        </label>
+        <label><input type="radio" name="coating" value="유" id="l_yes"><div>YES</div></label>
+        <label><input type="radio" name="coating" value="무" id="l_no" checked><div>NO</div></label>
       </div>
     </div>
     <div class="row">
@@ -313,25 +325,99 @@
 
   <div id="modalOverlay" onclick="closeModal()">
     <div class="modal" onclick="event.stopPropagation()">
-      <h3>Classifying Result</h3>
+      <h3 id="modal-title">Classifying Result</h3>
       <span class="hs-code" id="hs-display">-</span>
       <span class="message" id="result-message"></span>
-      <button class="close-btn" onclick="closeModal()">CLOSE</button>
+      <div class="cotton-options" id="cotton-options">
+        <button class="cotton-option-btn" onclick="selectCottonType('PLAIN')">PLAIN</button>
+        <button class="cotton-option-btn" onclick="selectCottonType('TWILL')">TWILL</button>
+        <button class="cotton-option-btn" onclick="selectCottonType('ETC')">ETC</button>
+        <button class="cotton-option-btn" onclick="selectCottonType('DENIM')">DENIM</button>
+      </div>
+      <button class="close-btn" id="close-btn" onclick="closeModal()">CLOSE</button>
     </div>
   </div>
 
   <script>
+    const 염색종류 = ["무염", "후염", "선염", "날염"];
+    const WARP코드 = ["6005-36-0000", "6005-37-0000", "6005-38-0000", "6005-39-0000"];
+    const WEFT코드 = ["6006-31-0000", "6006-32-0000", "6006-33-0000", "6006-34-0000"];
+    const E코드 = ["5407-61-1000", "5407-61-2000", "5407-61-3000", "5407-61-4000"];
+    const F코드 = ["5407-51-0000", "5407-52-0000", "5407-53-0000", "5407-54-0000"];
+    const G코드 = ["5407-41-0000", "5407-42-0000", "5407-43-0000", "5407-44-0000"];
+    const 약혼합코드 = ["5407-71-0000", "5407-72-0000", "5407-73-0000", "5407-74-0000"];
+    const 혼합EF코드 = ["5407-69-1000", "5407-69-2000", "5407-69-3000", "5407-69-4000"];
+    const 혼합GJ코드 = ["5407-81-1000", "5407-82-1000", "5407-83-1000", "5407-84-1000"];
+    const 혼합EFJ코드 = ["5407-81-2000", "5407-82-2000", "5407-83-2000", "5407-84-2000"];
+    const 혼합IJ코드 = ["5407-81-9000", "5407-82-9000", "5407-83-9000", "5407-84-9000"];
+    const 혼합GJK코드 = ["5407-91-1000", "5407-92-1000", "5407-93-1000", "5407-94-1000"];
+    const 혼합EFJK코드 = ["5407-91-2000", "5407-92-2000", "5407-93-2000", "5407-94-2000"];
+    const 혼합IJK코드 = ["5407-91-9000", "5407-92-9000", "5407-93-9000", "5407-94-9000"];
+    const 평직면코드 = ["5209-11-0000", "5209-31-0000", "5209-41-0000", "5209-51-0000"];
+    const 능직면코드 = ["5209-12-0000", "5209-32-0000", "5209-43-0000", "5209-52-0000"];
+    const 기타면코드 = ["5209-19-0000", "5209-39-0000", "5209-49-0000", "5209-59-0000"];
+    const 평직면코드2 = ["5211-11-0000", "5211-31-0000", "5211-41-0000", "5211-51-0000"];
+    const 능직면코드2 = ["5211-12-0000", "5211-32-0000", "5211-43-0000", "5211-52-0000"];
+    const 기타면코드2 = ["5211-19-0000", "5211-39-0000", "5211-49-0000", "5211-59-0000"];
+    const 단섬유코드 = ["5512-11-0000", "5512-19-1000", "5512-19-2000", "5512-19-3000"];
+    const 단섬유혼합코드 = ["5515-12-1000", "5515-12-9000", "5515-12-9000", "5515-12-9000"];
+
+    let pendingCotton = null;
+
     function readNumber(id) {
       const rawValue = document.getElementById(id).value.trim();
       return rawValue === "" ? 0 : Number(rawValue);
     }
 
+    function openModal() {
+      document.getElementById('modalOverlay').classList.add('active');
+    }
+
     function showResult(code, message = "") {
       const messageEl = document.getElementById('result-message');
+      document.getElementById('modal-title').innerText = 'Classifying Result';
       document.getElementById('hs-display').innerText = code;
       messageEl.innerText = message;
       messageEl.style.display = message ? 'block' : 'none';
-      document.getElementById('modalOverlay').classList.add('active');
+      document.getElementById('cotton-options').classList.remove('active');
+      document.getElementById('close-btn').style.display = 'block';
+      openModal();
+    }
+
+    function showCottonSelector(염색인덱스, cottonRange) {
+      pendingCotton = { 염색인덱스, cottonRange };
+      document.getElementById('modal-title').innerText = 'Cotton Fabric Type';
+      document.getElementById('hs-display').innerText = '면직물 조직 선택';
+      const messageEl = document.getElementById('result-message');
+      messageEl.innerText = '최종 HS CODE 분류를 위해 면직물 조건을 선택해주세요.';
+      messageEl.style.display = 'block';
+      document.getElementById('cotton-options').classList.add('active');
+      document.getElementById('close-btn').style.display = 'none';
+      openModal();
+    }
+
+    function selectCottonType(type) {
+      if (!pendingCotton) return;
+
+      const { 염색인덱스, cottonRange } = pendingCotton;
+      let 결과코드 = "";
+
+      if (cottonRange === "85_UP") {
+        if (type === "PLAIN") 결과코드 = 평직면코드[염색인덱스];
+        if (type === "TWILL") 결과코드 = 능직면코드[염색인덱스];
+        if (type === "ETC") 결과코드 = 기타면코드[염색인덱스];
+        if (type === "DENIM") 결과코드 = "5209-42-0000";
+      }
+
+      if (cottonRange === "50_TO_85") {
+        if (type === "PLAIN") 결과코드 = 평직면코드2[염색인덱스];
+        if (type === "TWILL") 결과코드 = 능직면코드2[염색인덱스];
+        if (type === "ETC") 결과코드 = 기타면코드2[염색인덱스];
+        if (type === "DENIM") 결과코드 = "5211-42-0000";
+      }
+
+      pendingCotton = null;
+      showResult(결과코드);
     }
 
     function runCalc() {
@@ -358,29 +444,6 @@
         return;
       }
 
-      const 염색종류 = ["무염", "후염", "선염", "날염"];
-      const WARP코드 = ["6005-36-0000", "6005-37-0000", "6005-38-0000", "6005-39-0000"];
-      const WEFT코드 = ["6006-31-0000", "6006-32-0000", "6006-33-0000", "6006-34-0000"];
-      const E코드 = ["5407-61-1000", "5407-61-2000", "5407-61-3000", "5407-61-4000"];
-      const F코드 = ["5407-51-0000", "5407-52-0000", "5407-53-0000", "5407-54-0000"];
-      const G코드 = ["5407-41-0000", "5407-42-0000", "5407-43-0000", "5407-44-0000"];
-      const 약혼합코드 = ["5407-71-0000", "5407-72-0000", "5407-73-0000", "5407-74-0000"];
-      const 혼합EF코드 = ["5407-69-1000", "5407-69-2000", "5407-69-3000", "5407-69-4000"];
-      const 혼합GJ코드 = ["5407-81-1000", "5407-82-1000", "5407-83-1000", "5407-84-1000"];
-      const 혼합EFJ코드 = ["5407-81-2000", "5407-82-2000", "5407-83-2000", "5407-84-2000"];
-      const 혼합IJ코드 = ["5407-81-9000", "5407-82-9000", "5407-83-9000", "5407-84-9000"];
-      const 혼합GJK코드 = ["5407-91-1000", "5407-92-1000", "5407-93-1000", "5407-94-1000"];
-      const 혼합EFJK코드 = ["5407-91-2000", "5407-92-2000", "5407-93-2000", "5407-94-2000"];
-      const 혼합IJK코드 = ["5407-91-9000", "5407-92-9000", "5407-93-9000", "5407-94-9000"];
-      const 평직면코드 = ["5209-11-0000", "5209-31-0000", "5209-41-0000", "5209-51-0000"];
-      const 능직면코드 = ["5209-12-0000", "5209-32-0000", "5209-43-0000", "5209-52-0000"];
-      const 기타면코드 = ["5209-19-0000", "5209-39-0000", "5209-49-0000", "5209-59-0000"];
-      const 평직면코드2 = ["5211-11-0000", "5211-31-0000", "5211-41-0000", "5211-51-0000"];
-      const 능직면코드2 = ["5211-12-0000", "5211-32-0000", "5211-43-0000", "5211-52-0000"];
-      const 기타면코드2 = ["5211-19-0000", "5211-39-0000", "5211-49-0000", "5211-59-0000"];
-      const 단섬유코드 = ["5512-11-0000", "5512-19-1000", "5512-19-2000", "5512-19-3000"];
-      const 단섬유혼합코드 = ["5515-12-1000", "5515-12-9000", "5515-12-9000", "5515-12-9000"];
-
       const 염색인덱스 = 염색종류.indexOf(M8);
       let 결과코드 = "";
 
@@ -398,13 +461,19 @@
         결과코드 = 단섬유코드[염색인덱스];
       } else if (D8 === "WOVEN" && K8 >= 50 && K8 < 85) {
         결과코드 = 단섬유혼합코드[염색인덱스];
+      } else if (D8 === "WOVEN" && J8 >= 85) {
+        showCottonSelector(염색인덱스, "85_UP");
+        return;
+      } else if (D8 === "WOVEN" && J8 >= 50 && J8 < 85) {
+        showCottonSelector(염색인덱스, "50_TO_85");
+        return;
       } else if (G8 >= 50 && G8 < 85 && J8 > 0 && D8 === "WOVEN") {
         결과코드 = 혼합GJ코드[염색인덱스];
       } else if (E8 + F8 >= 50 && E8 + F8 < 85 && J8 > 0 && D8 === "WOVEN") {
         결과코드 = 혼합EFJ코드[염색인덱스];
       } else if (E8 + F8 + G8 + I8 >= 50 && J8 > 0 && J8 < 50 && D8 === "WOVEN") {
         결과코드 = 혼합IJ코드[염색인덱스];
-      } else if (D8 === "WOVEN" && E8 < 85 && F8 < 85 && E8 + F8 >= 50) {
+      } else if (D8 === "WOVEN" && E8 > 0 && F8 > 0 && E8 + F8 >= 50) {
         결과코드 = 혼합EF코드[염색인덱스];
       } else if (D8 === "WOVEN" && (E8 >= 85 || F8 >= 85 || G8 >= 85)) {
         결과코드 = E8 >= 85 ? E코드[염색인덱스] : (F8 >= 85 ? F코드[염색인덱스] : G코드[염색인덱스]);
@@ -416,22 +485,6 @@
         결과코드 = 혼합EFJK코드[염색인덱스];
       } else if (D8 === "WOVEN" && E8 + F8 + G8 < I8 && I8 < 85) {
         결과코드 = 혼합IJK코드[염색인덱스];
-      } else if (D8 === "면직물_PLAIN" && J8 >= 85) {
-        결과코드 = 평직면코드[염색인덱스];
-      } else if (D8 === "면직물_TWILL" && J8 >= 85) {
-        결과코드 = 능직면코드[염색인덱스];
-      } else if (D8 === "면직물_ETC" && J8 >= 85) {
-        결과코드 = 기타면코드[염색인덱스];
-      } else if (D8 === "면직물_DENIM" && J8 >= 85) {
-        결과코드 = "5209-42-0000";
-      } else if (D8 === "면직물_PLAIN" && J8 >= 50 && J8 < 85) {
-        결과코드 = 평직면코드2[염색인덱스];
-      } else if (D8 === "면직물_TWILL" && J8 >= 50 && J8 < 85) {
-        결과코드 = 능직면코드2[염색인덱스];
-      } else if (D8 === "면직물_ETC" && J8 >= 50 && J8 < 85) {
-        결과코드 = 기타면코드2[염색인덱스];
-      } else if (D8 === "면직물_DENIM" && J8 >= 50 && J8 < 85) {
-        결과코드 = "5211-42-0000";
       } else {
         결과코드 = "해당 조건 없음";
       }
@@ -441,8 +494,8 @@
 
     function closeModal() {
       document.getElementById('modalOverlay').classList.remove('active');
+      pendingCotton = null;
     }
   </script>
 </body>
-
 </html>
